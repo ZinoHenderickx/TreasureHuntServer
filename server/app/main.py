@@ -66,7 +66,7 @@ async def root():
     return Response(content=(
         'Welkom op de Build 3 schattenjacht 2020!'
         ' De opdrachten kan je steeds terugvinden op de "/opdrachtXX" paden, waarbij XX het nummer van de opdracht voorstelt.'
-        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht01".'
+        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht10".'
         ' Een eenvoudige GET request volstaat om aan de slag te gaan!'))
 
 opdracht1_json = {
