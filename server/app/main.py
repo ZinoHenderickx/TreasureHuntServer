@@ -280,14 +280,10 @@ opdracht11_json = {
         "id" : 11,
         "beschrijving" : (
             "Proficiat je hebt gewonnen!")
-    },
-    "string" : "opdracht 3",
-    "karakterset" : "utf-8"
+    }
 }
 
-@app.post("/opdracht11")
+
+@app.post("/opdracht11/Hallo")
 async def opdracht11():
-    if "192.168.0.20:8000/opdracht11/Hallo":
         return opdracht11_json
-    else:
-        return fout_antwoord
