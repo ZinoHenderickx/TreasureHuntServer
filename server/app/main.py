@@ -251,3 +251,52 @@ async def opdracht7(body: Opdracht7Body):
             return fout_antwoord
     except:
         return fout_antwoord
+
+@app.get("/")
+async def root():
+    return Response(content=(
+        'Welkom op de Build 3 schattenjacht 2020!'
+        ' De opdrachten kan je steeds terugvinden op de "/opdrachtXX" paden, waarbij XX het nummer van de opdracht voorstelt.'
+        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht10".'
+        ' Een eenvoudige GET request volstaat om aan de slag te gaan!'))
+
+opdracht10_json = {
+    "opdracht" : {
+        "id" : 1,
+        "beschrijving" : (
+            "Plaats het volgende bericht naar hexadecimaal. Nadien plaats je het antwoord als volgt:"
+            "link .../opdracht11/JeHexadecimalewaarde")
+    },
+        "string" : "Hallo",
+        "karakterset" : "utf-8"
+}
+
+
+@app.get("/opdracht10")
+async def opdracht10():
+    return opdracht10_json
+
+opdracht11_json = {
+    "opdracht" : {
+        "id" : 11,
+        "beschrijving" : (
+            "Je start met de string hieronder."
+            " Vorm deze om naar bytes en maak daarbij gebruik van de bijhorende karakterset."
+            " Stuur deze bytes vervolgens via het URL pad in voor de volgende opdracht."
+            " Gebruik hiervoor een POST request."
+            " Denk eraan dat URLs niet zomaar pure bytes toelaten: je zal ze bijvoorbeeld eerst moeten omvormen naar hexadecimale waarden (die je wel makkelijk als string kan sturen)."
+            " Je URL zal er dus als volgt uitzien: .../opdracht3/JeHexadecimaleWaarde")
+    },
+    "string" : "opdracht 3",
+    "karakterset" : "utf-8"
+}
+
+@app.post("/opdracht11")
+async def opdracht11(hex_encoded: str):
+    value_string = opdracht2_json['string']
+    value_bytes = value_string.encode(opdracht2_json['karakterset'])
+    solution = value_bytes.hex()
+    if hex_encoded == solution:
+        return opdracht3_json
+    else:
+        return fout_antwoord
