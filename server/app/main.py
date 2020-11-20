@@ -264,11 +264,10 @@ opdracht10_json = {
     "opdracht" : {
         "id" : 1,
         "beschrijving" : (
-            "Plaats het volgende bericht naar hexadecimaal. Nadien plaats je het antwoord als volgt:"
-            "link .../opdracht11/JeHexadecimalewaarde")
+            "Plaats het byte bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt:"
+            "link .../opdracht11/HetWoord")
     },
-        "string" : "Hallo",
-        "karakterset" : "utf-8"
+        "string" : "48616c6c6f",
 }
 
 
@@ -280,23 +279,15 @@ opdracht11_json = {
     "opdracht" : {
         "id" : 11,
         "beschrijving" : (
-            "Je start met de string hieronder."
-            " Vorm deze om naar bytes en maak daarbij gebruik van de bijhorende karakterset."
-            " Stuur deze bytes vervolgens via het URL pad in voor de volgende opdracht."
-            " Gebruik hiervoor een POST request."
-            " Denk eraan dat URLs niet zomaar pure bytes toelaten: je zal ze bijvoorbeeld eerst moeten omvormen naar hexadecimale waarden (die je wel makkelijk als string kan sturen)."
-            " Je URL zal er dus als volgt uitzien: .../opdracht3/JeHexadecimaleWaarde")
+            "Proficiat je hebt gewonnen!")
     },
     "string" : "opdracht 3",
     "karakterset" : "utf-8"
 }
 
 @app.post("/opdracht11")
-async def opdracht11(hex_encoded: str):
-    value_string = opdracht2_json['string']
-    value_bytes = value_string.encode(opdracht2_json['karakterset'])
-    solution = value_bytes.hex()
-    if hex_encoded == solution:
-        return opdracht3_json
+async def opdracht11():
+    if "192.168.0.20:8000/opdracht11/Hallo":
+        return opdracht11_json
     else:
         return fout_antwoord
