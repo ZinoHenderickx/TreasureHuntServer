@@ -271,10 +271,7 @@ async def opdracht8(body: Opdracht8Body):
     text_decode = bytes.fromhex(hex_text)
     text = text_decode.decode(encoding='utf_8')
     oplossing = text
-    if text == text_decode.decode(encoding='utf_8' == oplossing:
-        return opdracht8_json
-    else:
-        return fout_antwoord
+
 
 
 opdracht8_json = {
