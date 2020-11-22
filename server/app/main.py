@@ -15,7 +15,7 @@ default_string_encoding = 'utf-8'
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = FastAPI()
-oplossing = "http://192.168.0.20:8000/opdracht8/Hallo"
+oplossing = "Hallo"
 
 app.mount("/static", StaticFiles(directory=parent_dir_path + "/static"), name="static")
 
@@ -66,8 +66,8 @@ class Opdracht7Body(BaseModel):
     sleutel: str
     nonce: str
 
-# class Opdracht8Body(BaseModel):
-#     baricht: str
+class Opdracht8Body(BaseModel):
+     text: str
 
 fout_antwoord = Response(content='Fout antwoord!')
 
@@ -264,6 +264,19 @@ async def opdracht7(body: Opdracht7Body):
     except:
         return fout_antwoord
 
+
+@app.post("/opdracht8/{text}")
+async def opdracht8(body: Opdracht8Body):
+    hex_text = '48616c6c6f'
+    text_decode = bytes.fromhex(hex_text)
+    text = text_decode.decode(encoding='utf_8')
+    oplossing = text
+    if text = text_decode.decode(encoding='utf_8' == oplossing:
+        return opdracht8_json
+    else:
+        return fout_antwoord
+
+
 opdracht8_json = {
     "opdracht" : {
         "id" : 8,
@@ -271,14 +284,3 @@ opdracht8_json = {
             "Proficiat u hebt gewonnen")
     },
 }
-
-@app.post("/opdracht8/")
-async def opdracht8():
-    try:
-        hex_text = '48616c6c6f'
-        text_decode = bytes.fromhex(hex_text)
-        text = text_decode.decode(encoding='utf_8')
-        if text == 'Hallo':
-            return opdracht8_json
-        else:
-            return fout_antwoord
