@@ -263,14 +263,7 @@ async def opdracht7(body: Opdracht7Body):
             return fout_antwoord
     except:
         return fout_antwoord
-
-
-@app.post("/opdracht8/Hallo")
-async def opdracht8():
-    return opdracht8_json
-
-
-
+        
 opdracht8_json = {
     "opdracht" : {
         "id" : 8,
@@ -278,3 +271,10 @@ opdracht8_json = {
             "Proficiat u hebt gewonnen")
     },
 }
+
+@app.post("/opdracht8/Hallo")
+async def opdracht8():
+    return opdracht8_json
+
+
+
