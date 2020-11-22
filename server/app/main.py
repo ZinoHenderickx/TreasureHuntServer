@@ -229,8 +229,10 @@ opdracht7_json = {
     "opdracht" : {
         "id" : 7,
         "beschrijving" : (
-            "Hier stopt voorlopig je zoektocht!")
-    }
+            "Plaats het byte bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt:"
+            "link .../opdracht11/HetWoord")
+    },
+    "string": "48616c6c6f",
 }
 
 @app.post("/opdracht7")
