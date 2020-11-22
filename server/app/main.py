@@ -264,7 +264,9 @@ opdracht8_json = {
 
 @app.post("/opdracht8")
 async def opdracht8():
-    if text == opdracht7_json['Hallo']:
+    if hex_text = '48616c6c6f'
+    text_decode = bytes.fromhex(hex_text)
+    text = text_decode.decode(encoding='utf_8')
         return opdracht8_json
     else:
         return fout_antwoord
