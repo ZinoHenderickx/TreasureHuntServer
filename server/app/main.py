@@ -66,7 +66,7 @@ async def root():
     return Response(content=(
         'Welkom op de Build 3 schattenjacht 2020!'
         ' De opdrachten kan je steeds terugvinden op de "/opdrachtXX" paden, waarbij XX het nummer van de opdracht voorstelt.'
-        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht10".'
+        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht01".'
         ' Een eenvoudige GET request volstaat om aan de slag te gaan!'))
 
 opdracht1_json = {
@@ -181,7 +181,7 @@ opdracht5_json = {
             "relatieve_url" : "/static/opdracht5/applicatie_odilon.exe"
         },
         {
-            "relatieve_url" : opdracht5_origineel_relatieve_url
+            "relatieve_url" : "opdracht5_origineel_relatieve_url"
         },
         {
             "relatieve_url" : "/static/opdracht5/applicatie_mariette.exe"
@@ -199,43 +199,74 @@ async def opdracht5(body: Opdracht5Body):
     with open(parent_dir_path + relatieve_url, 'rb') as file:
         solution = hash_hexdigest(file, SHA512.new())
     if body.sha512 == solution:
-        return opdracht10_json
+        return opdracht5_json
     else:
         return fout_antwoord
 
-
-@app.get("/")
-async def root():
-    return Response(content=(
-        'Welkom op de Build 3 schattenjacht 2020!'
-        ' De opdrachten kan je steeds terugvinden op de "/opdrachtXX" paden, waarbij XX het nummer van de opdracht voorstelt.'
-        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht10".'
-        ' Een eenvoudige GET request volstaat om aan de slag te gaan!'))
-
-opdracht10_json = {
+opdracht6_json = {
     "opdracht" : {
-        "id" : 1,
+        "id" : 6,
+        "beschrijving" : (
+            "Versleutel onderstaand bericht met de AES encryptietechniek."
+            " Maak hiervoor gebruik van de EAX kettingmodus en verlies de bijhorende karakterset niet uit het oog."
+            " Gebruik je eigen nonce en 256-bit sleutel."
+            " Het versleuteld bericht stuur je samen met de nonce en sleutel in via een POST request in JSON-formaat voor de volgende opdracht."
+            " Gebruik hexadecimale encodering voor het versturen van ruwe bits/bytes."
+            " Je JSON ziet er als volgt uit: {'bericht_versleuteld' : '...', 'sleutel' : '...', 'nonce' : '...'}")
+    },
+    "bericht" : "Geheim bericht bestemd voor de docenten IoT aan de KdG",
+    "karakterset" : "utf-8"
+}
+
+@app.post("/opdracht6")
+async def opdracht6(body: Opdracht6Body):
+    if body.relatieve_url == opdracht5_origineel_relatieve_url:
+        return opdracht6_json
+    else:
+        return fout_antwoord
+
+opdracht7_json = {
+    "opdracht" : {
+        "id" : 7,
         "beschrijving" : (
             "Plaats het byte bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt:"
-            "link .../opdracht11/HetWoord")
-    },
+            "link .../opdracht8/HetWoord")
+    }
         "string" : "48616c6c6f",
 }
 
-
-@app.get("/opdracht10")
-async def opdracht10():
-    return opdracht10_json
+@app.post("/opdracht7")
+async def opdracht7(body: Opdracht7Body):
+    try:
+        key = bytes.fromhex(body.sleutel)
+        required_key_length = 256 // 8
+        if len(key) != required_key_length:
+            return fout_antwoord
+        nonce = bytes.fromhex(body.nonce)
+        ciphertext_bytes = bytes.fromhex(body.bericht_versleuteld)
+        cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
+        plaintext_bytes = cipher.decrypt(ciphertext_bytes)
+        plaintext = plaintext_bytes.decode(opdracht6_json['karakterset'])
+        if plaintext == opdracht6_json['bericht']:
+            return opdracht7_json
+        else:
+            return fout_antwoord
+    except:
+        return fout_antwoord
+        
+@app.get("/opdracht8")
+async def opdracht8():
+    return opdracht8_json
 
 opdracht11_json = {
     "opdracht" : {
-        "id" : 11,
+        "id" : 8,
         "beschrijving" : (
             "Proficiat je hebt gewonnen!")
     }
 }
 
 
-@app.post("/opdracht11/Hallo")
+@app.post("/opdracht8/Hallo")
 async def opdracht11():
         return opdracht11_json
