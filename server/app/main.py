@@ -230,7 +230,7 @@ opdracht7_json = {
         "id" : 7,
         "beschrijving" : (
             "Plaats het byte bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt:"
-            "link .../opdracht11/HetWoord")
+            "link .../opdracht8/HetWoord")
     },
     "string": "48616c6c6f",
 }
@@ -254,9 +254,17 @@ async def opdracht7(body: Opdracht7Body):
     except:
         return fout_antwoord
 
+opdracht8_json = {
+    "opdracht" : {
+        "id" : 8,
+        "beschrijving" : (
+            "Proficiat u hebt gewonnen")
+    },
+}
+
 @app.post("/opdracht8")
 async def opdracht8():
-    if result = "Hallo"
+    if text == opdracht7_json['Hallo']:
         return opdracht8_json
     else:
         return fout_antwoord
