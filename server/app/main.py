@@ -15,7 +15,7 @@ default_string_encoding = 'utf-8'
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = FastAPI()
-oplossing = "Hallo"
+oplossing = "http://192.168.0.20:8000/opdracht8/Hallo"
 
 app.mount("/static", StaticFiles(directory=parent_dir_path + "/static"), name="static")
 
@@ -267,7 +267,7 @@ async def opdracht7(body: Opdracht7Body):
 
 @app.post("/opdracht8/")
 async def opdracht8():
-    if "http://192.168.0.20:8000/opdracht8/Hallo":
+    if oplossing == opdracht8_json:
         return opdracht8_json
     else:
         return fout_antwoord
