@@ -272,7 +272,7 @@ opdracht8_json = {
     },
 }
 
-@app.post("/opdracht8/{hex_encode}")
+@app.post("/opdracht8/")
 async def opdracht8():
     if oplossing:
         return opdracht8_json
