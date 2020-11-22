@@ -204,73 +204,30 @@ async def opdracht5(body: Opdracht5Body):
         return fout_antwoord
 
 
-opdracht6_json = {
+opdracht10_json = {
     "opdracht" : {
-        "id" : 6,
-        "beschrijving" : (
-            "Versleutel onderstaand bericht met de AES encryptietechniek."
-            " Maak hiervoor gebruik van de EAX kettingmodus en verlies de bijhorende karakterset niet uit het oog."
-            " Gebruik je eigen nonce en 256-bit sleutel."
-            " Het versleuteld bericht stuur je samen met de nonce en sleutel in via een POST request in JSON-formaat voor de volgende opdracht."
-            " Gebruik hexadecimale encodering voor het versturen van ruwe bits/bytes."
-            " Je JSON ziet er als volgt uit: {'bericht_versleuteld' : '...', 'sleutel' : '...', 'nonce' : '...'}")
-    },
-    "bericht" : "Geheim bericht bestemd voor de docenten IoT aan de KdG",
-    "karakterset" : "utf-8"
-}
-
-@app.post("/opdracht6")
-async def opdracht6(body: Opdracht6Body):
-    if body.relatieve_url == opdracht5_origineel_relatieve_url:
-        return opdracht6_json
-    else:
-        return fout_antwoord
-
-opdracht7_json = {
-    "opdracht" : {
-        "id" : 7,
+        "id" : 1,
         "beschrijving" : (
             "Plaats het byte bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt:"
             "link .../opdracht11/HetWoord")
     },
         "string" : "48616c6c6f",
-    }
 }
 
-@app.post("/opdracht7")
-async def opdracht7(body: Opdracht7Body):
-    try:
-        key = bytes.fromhex(body.sleutel)
-        required_key_length = 256 // 8
-        if len(key) != required_key_length:
-            return fout_antwoord
-        nonce = bytes.fromhex(body.nonce)
-        ciphertext_bytes = bytes.fromhex(body.bericht_versleuteld)
-        cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
-        plaintext_bytes = cipher.decrypt(ciphertext_bytes)
-        plaintext = plaintext_bytes.decode(opdracht6_json['karakterset'])
-        if plaintext == opdracht6_json['bericht']:
-            return opdracht7_json
-        else:
-            return fout_antwoord
-    except:
-        return fout_antwoord
 
+@app.get("/opdracht10")
+async def opdracht10():
+    return opdracht10_json
 
-
-@app.get("/opdracht7")
-async def opdracht7():
-    return opdracht8_json
-
-opdracht8_json = {
+opdracht11_json = {
     "opdracht" : {
-        "id" : 8,
+        "id" : 11,
         "beschrijving" : (
             "Proficiat je hebt gewonnen!")
     }
 }
 
 
-@app.post("/opdracht8/Hallo")
-async def opdracht8():
-        return opdracht8_json
+@app.post("/opdracht11/Hallo")
+async def opdracht11():
+        return opdracht11_json
