@@ -264,14 +264,6 @@ async def opdracht7(body: Opdracht7Body):
     except:
         return fout_antwoord
 
-
-@app.post("/opdracht8/")
-async def opdracht8():
-    if oplossing == opdracht8_json:
-        return opdracht8_json
-    else:
-        return fout_antwoord
-
 opdracht8_json = {
     "opdracht" : {
         "id" : 8,
@@ -279,3 +271,14 @@ opdracht8_json = {
             "Proficiat u hebt gewonnen")
     },
 }
+
+@app.post("/opdracht8/")
+async def opdracht8():
+    try:
+        hex_text = '48616c6c6f'
+        text_decode = bytes.fromhex(hex_text)
+        text = text_decode.decode(encoding='utf_8')
+        if text == 'Hallo':
+            return opdracht8_json
+        else:
+            return fout_antwoord
