@@ -15,6 +15,7 @@ default_string_encoding = 'utf-8'
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = FastAPI()
+oplossing = "Hallo"
 
 app.mount("/static", StaticFiles(directory=parent_dir_path + "/static"), name="static")
 
@@ -43,6 +44,12 @@ def hash(file, hash_buffer):
 def hash_hexdigest(file, hash_buffer):
     return hash(file, hash_buffer).hexdigest()
 
+def hex_encode(message: str):
+    hex_text = '48616c6c6f'
+    text_decode = bytes.fromhex(hex_text)
+    text = text_decode.decode(encoding='utf_8')
+    return hex_text, text_decode, text
+
 class Opdracht2Body(BaseModel):
     nr1: str
     nr2: str
@@ -58,6 +65,9 @@ class Opdracht7Body(BaseModel):
     bericht_versleuteld: str
     sleutel: str
     nonce: str
+
+# class Opdracht8Body(BaseModel):
+#     baricht: str
 
 fout_antwoord = Response(content='Fout antwoord!')
 
@@ -262,11 +272,9 @@ opdracht8_json = {
     },
 }
 
-@app.post("/opdracht8")
+@app.post("/opdracht8/{hex_encode}")
 async def opdracht8():
-    if hex_text = '48616c6c6f'
-    text_decode = bytes.fromhex(hex_text)
-    text = text_decode.decode(encoding='utf_8')
+    if oplossing:
         return opdracht8_json
     else:
         return fout_antwoord
