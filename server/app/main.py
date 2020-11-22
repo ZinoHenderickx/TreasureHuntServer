@@ -253,3 +253,10 @@ async def opdracht7(body: Opdracht7Body):
             return fout_antwoord
     except:
         return fout_antwoord
+
+@app.post("/opdracht8")
+async def opdracht8():
+    if result = "Hallo"
+        return opdracht8_json
+    else:
+        return fout_antwoord
