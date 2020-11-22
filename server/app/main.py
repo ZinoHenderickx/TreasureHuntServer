@@ -274,7 +274,7 @@ opdracht8_json = {
 
 @app.post("/opdracht8/")
 async def opdracht8():
-    if oplossing:
+    if "http://192.168.0.20:8000/opdracht8/Hallo":
         return opdracht8_json
     else:
         return fout_antwoord
