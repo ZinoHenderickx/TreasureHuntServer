@@ -265,22 +265,22 @@ async def opdracht7(body: Opdracht7Body):
         return fout_antwoord
 
 
-# @app.post("/opdracht8/{text}")
-# async def opdracht8(body: Opdracht8Body):
-#     hex_text = '48616c6c6f'
-#     text_decode = bytes.fromhex(hex_text)
-#     text = text_decode.decode(encoding='utf_8')
-#     oplossing = text
-#     if text == text_decode.decode(encoding='utf_8' == oplossing:
-#         return opdracht8_json
-#     else:
-#         return fout_antwoord
+@app.post("/opdracht8/Hallo")
+async def opdracht8(body: Opdracht8Body):
+    hex_text = '48616c6c6f'
+    text_decode = bytes.fromhex(hex_text)
+    text = text_decode.decode(encoding='utf_8')
+    oplossing = text
+    if text == text_decode.decode(encoding='utf_8' == oplossing:
+        return opdracht8_json
+    else:
+        return fout_antwoord
 
 
-# opdracht8_json = {
-#     "opdracht" : {
-#         "id" : 8,
-#         "beschrijving" : (
-#             "Proficiat u hebt gewonnen")
-#     },
-# }
+opdracht8_json = {
+    "opdracht" : {
+        "id" : 8,
+        "beschrijving" : (
+            "Proficiat u hebt gewonnen")
+    },
+}
