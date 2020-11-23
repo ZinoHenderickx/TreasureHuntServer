@@ -15,7 +15,6 @@ default_string_encoding = 'utf-8'
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = FastAPI()
-oplossing = "Hallo"
 
 app.mount("/static", StaticFiles(directory=parent_dir_path + "/static"), name="static")
 
@@ -67,7 +66,7 @@ class Opdracht7Body(BaseModel):
     nonce: str
 
 class Opdracht8Body(BaseModel):
-    text: str
+    hex_text: str
 
 fout_antwoord = Response(content='Fout antwoord!')
 
@@ -76,7 +75,7 @@ async def root():
     return Response(content=(
         'Welkom op de Build 3 schattenjacht 2020!'
         ' De opdrachten kan je steeds terugvinden op de "/opdrachtXX" paden, waarbij XX het nummer van de opdracht voorstelt.'
-        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht01".'
+        ' De eerste opdracht vind je dus op het volgende pad: "/opdracht1".'
         ' Een eenvoudige GET request volstaat om aan de slag te gaan!'))
 
 opdracht1_json = {
@@ -239,10 +238,10 @@ opdracht7_json = {
     "opdracht" : {
         "id" : 7,
         "beschrijving" : (
-            "Plaats het byte bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt:"
-            "link .../opdracht8/HetWoord")
+            "Plaats het hex bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt in een JSON formaat:"
+            "{'text' : '...'}")
     },
-    "string": "48616c6c6f",
+    "string": "68616c6c6f",
 }
 
 @app.post("/opdracht7")
@@ -279,7 +278,7 @@ async def opdracht8(body: Opdracht8Body):
         text_decode = bytes.fromhex(hex_text)
         text = text_decode.decode(encoding='utf_8')
 
-        if (text() == "Hallo"):
+        if text == "hallo":
             return opdracht8_json
         else:
             return fout_antwoord
