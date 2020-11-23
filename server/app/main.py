@@ -275,7 +275,7 @@ opdracht8_json = {
 @app.post("/opdracht8")
 async def opdracht8(body: Opdracht8Body):
     try:
-        hex_text = '48616c6c6f'
+        hex_text = '68616c6c6f'
         text_decode = bytes.fromhex(hex_text)
         text = text_decode.decode(encoding='utf_8')
 
