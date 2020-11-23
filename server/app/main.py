@@ -10,6 +10,8 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.Signature import pkcs1_15
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import rsa
 
 default_string_encoding = 'utf-8'
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -239,9 +241,9 @@ opdracht7_json = {
         "id" : 7,
         "beschrijving" : (
             "Plaats het hex bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt in een JSON formaat:"
-            "{'text' : '...'}")
+            "{'text' : '...', 'sleutel' : '...'}")
     },
-    "string": "68616c6c6f",
+    "string": "506c617953746174696f6e2035",
 }
 
 @app.post("/opdracht7")
@@ -274,13 +276,14 @@ opdracht8_json = {
 @app.post("/opdracht8")
 async def opdracht8(body: Opdracht8Body):
     try:
-        hex_text = '68616c6c6f'
-        text_decode = bytes.fromhex(hex_text)
-        text = text_decode.decode(encoding='utf_8')
-
-        if text == "hallo":
+        private_key = serialization.load_pem_private_key(
+            key_file.read(),
+            password=None,
+            backend=default_backend()
+        )
+        if (encrypt) == "PlayStation 5":
             return opdracht8_json
         else:
             return fout_antwoord
-    except:
+    except: 
         return fout_antwoord
