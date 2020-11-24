@@ -68,7 +68,10 @@ class Opdracht7Body(BaseModel):
     nonce: str
 
 class Opdracht8Body(BaseModel):
-    hex_text: str
+    bytes_text: str
+    key_text: str
+    bericht_hex: str
+    bericht_versleuteld_hex : str
 
 fout_antwoord = Response(content='Fout antwoord!')
 
@@ -237,7 +240,7 @@ async def opdracht6(body: Opdracht6Body):
         return fout_antwoord
 
 # Aanmaken publiek en privaat sleutelpaar
-key = RSA.generate(2048)
+key = RSA.generate(1024)
 private_key = key.export_key()
 file_out = open("private.pem", "wb")
 file_out.write(private_key)
@@ -260,6 +263,7 @@ print(public_key.hex())
 # Private sleutel bijhouden
 
 
+private_key = "2d2d2d2d2d424547494e205253412050524956415445204b45592d2d2d2d2d0a4d4949435777494241414b4267514458475941566a6e3376544c72464b7a6b6f316f632b4f305630516933436e7666694d6778676e6343506634424b2b5353430a6835617a67684d662f30496c73784b574857436c48722f3443396f664d3249352f5247365a564363315a4a4362486e7547567072384c536e594e316f615578700a6e654a4250492b65565465796538436375594c4c714d384b7a44324c726671394e3536384c6c6732356465554970494b795473783079447a59774944415141420a416f474148766a67576f2b5a547073576476626d2f334730666b6f6d6b575a49767a4949734d6453784f3679494349707a36485a6c30395377644a45557266520a386455524932573432586834736f7a4872457079657773586c73326d326b33647968645a4753593962696c7076596f336e64502f6b336c76614965452f432b440a49536674635742554b6c45474c5044775553697458353759766161314a6f4550586245496e6855454973496e4e4a4543515144655a697273514868745a344c5a0a39525743704d624869727657674748574b7075307a6354354b785442595051714749316733787a5437554e7056434a715563724975385845676b69302f6e434e0a6163727a55507466416b454139356b42326a4b4f6533786936507862792b6b466e76304f592b4765354b46556742446a2f356a48554755444e666f47414c314b0a695a51484969705a62313979384b717473566e3157532b5433414e6c6341754b66514a414a7972724b45783661526f7679313845654d7534546e4136674a352f0a6e493549656545376258364f327a664f434a506d596b636f3970483071316f7237586d574d79414f786e734466777a496d62386d4252416746514a414c304d330a78557a7451636b6d6f4536377678724742656c4d4f2b697669666a35786c427a465445327172503966756f78427963612b565157594945772f54393945302b680a5244396c78425a2b355071492f48425869514a41577174354f583068493970462f446c412f6e46437a4d525a6458503367675230745a47374b6d3741596939660a344f5a35665a794e754d356f50674c6a644e513859707537552b6d467a35506c70334c47484966372b773d3d0a2d2d2d2d2d454e44205253412050524956415445204b45592d2d2d2d2d"
 opdracht7_json = {
     "opdracht" : {
         "id" : 7,
@@ -268,7 +272,7 @@ opdracht7_json = {
             "{'bericht_versleuteld_hex' : '...'}")
     },
     "bericht": "Geheim bericht aan Zino",
-    "publieke_sleutel_hex" : "HEX van publieke sleutel"
+    "publieke_sleutel_hex" : "2d2d2d2d2d424547494e205055424c4943204b45592d2d2d2d2d0a4d4947664d413047435371475349623344514542415155414134474e4144434269514b42675143306c3879446d6b5a68497248454c31785564395549454330780a7245394161584b46415763666a4d4b63716f4f7737656432534e344c6d4d4e54505176422f534b4f4f55394c4b6677374b45316b3952756e37735439565034500a6c764a526a33463755536f666d317379516b70737063504a753851636e616a51474173366c6b4830377a4d765445664b45366f514e7954346136694e6a4c4f6e0a3966534164466b794e6e55772f302b4671774944415141420a2d2d2d2d2d454e44205055424c4943204b45592d2d2d2d2d"
 }
 
 @app.post("/opdracht7")
@@ -298,13 +302,24 @@ opdracht8_json = {
     },
 }
 
-# @app.post("/opdracht8")
-# async def opdracht8(body: Opdracht8Body):
-#     try:
-#         # je krijgt hier versleuteld bericht binnen
-#         # bericht is HEX, omvormen naar bytes alvorens te gebruiken
-#         # versleuteld bericht decrypteren met private sleutel die je hierboven opgeslagen hebt
-#         # checken of resultaat overeenkomt met origineel bericht (denk eraan dat resultaat bytes zijn, dus nog decoderen naar string)
+@app.post("/opdracht8")
+async def opdracht8(body: Opdracht8Body):
+    try:
+        # je krijgt hier versleuteld bericht binnen
+        # bericht_versleuteld_hex = print(body.bericht_hex)
 
-#         # session_key = get_random_bytes(16)
-#         # enc_session_key = cipher_rsa.encrypt(session_key)
+        # bericht is HEX, omvormen naar bytes alvorens te gebruiken
+        bytes_versleuteld = bytes.fromhex(body.bericht_hex)
+
+        # versleuteld bericht decrypteren met private sleutel die je hierboven opgeslagen hebt
+        cipher_aes = AES.new(private_key, AES.MODE_EAX)
+        bytes_versleuteld = cipher_aes.decrypt_and_verify()
+        print(bytes_versleuteld.decode("utf-8"))
+
+        # checken of resultaat overeenkomt met origineel bericht (denk eraan dat resultaat bytes zijn, dus nog decoderen naar string)
+        if bytes_versleuteld == cipher_aes.decrypt(body.bytes_text):
+            return opdracht8_json
+        else:
+            return fout_antwoord
+    except:
+        return fout_antwoord
