@@ -236,14 +236,39 @@ async def opdracht6(body: Opdracht6Body):
     else:
         return fout_antwoord
 
+# Aanmaken publiek en privaat sleutelpaar
+key = RSA.generate(2048)
+private_key = key.export_key()
+file_out = open("private.pem", "wb")
+file_out.write(private_key)
+file_out.close()
+
+public_key = key.publickey().export_key()
+file_out = open("receiver.pem", "wb")
+file_out.write(public_key)
+file_out.close()
+
+print(public_key)
+print(private_key)
+
+
+
+# Publieke sleutel (in bytes) omvormen naar HEX om in JSON te zetten hieronder
+
+print(public_key.hex())
+
+# Private sleutel bijhouden
+
+
 opdracht7_json = {
     "opdracht" : {
         "id" : 7,
         "beschrijving" : (
-            "Plaats het hex bericht naar een leesbaar woord. Nadien plaats je het antwoord als volgt in een JSON formaat:"
-            "{'text' : '...', 'sleutel' : '...'}")
+            "Encrypteer het bijgevoegde bericht met de bijgevoegde publieke sleutel"
+            "{'bericht_versleuteld_hex' : '...'}")
     },
-    "string": "506c617953746174696f6e2035",
+    "bericht": "Geheim bericht aan Zino",
+    "publieke_sleutel_hex" : "HEX van publieke sleutel"
 }
 
 @app.post("/opdracht7")
@@ -273,17 +298,13 @@ opdracht8_json = {
     },
 }
 
-@app.post("/opdracht8")
-async def opdracht8(body: Opdracht8Body):
-    try:
-        private_key = serialization.load_pem_private_key(
-            key_file.read(),
-            password=None,
-            backend=default_backend()
-        )
-        if (encrypt) == "PlayStation 5":
-            return opdracht8_json
-        else:
-            return fout_antwoord
-    except: 
-        return fout_antwoord
+# @app.post("/opdracht8")
+# async def opdracht8(body: Opdracht8Body):
+#     try:
+#         # je krijgt hier versleuteld bericht binnen
+#         # bericht is HEX, omvormen naar bytes alvorens te gebruiken
+#         # versleuteld bericht decrypteren met private sleutel die je hierboven opgeslagen hebt
+#         # checken of resultaat overeenkomt met origineel bericht (denk eraan dat resultaat bytes zijn, dus nog decoderen naar string)
+
+#         # session_key = get_random_bytes(16)
+#         # enc_session_key = cipher_rsa.encrypt(session_key)
