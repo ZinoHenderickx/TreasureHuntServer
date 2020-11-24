@@ -306,7 +306,7 @@ opdracht8_json = {
 async def opdracht8(body: Opdracht8Body):
     try:
         # je krijgt hier versleuteld bericht binnen
-        # bericht_versleuteld_hex = print(body.bericht_hex)
+        bericht_versleuteld_hex = print(body.bericht_hex)
 
         # bericht is HEX, omvormen naar bytes alvorens te gebruiken
         bytes_versleuteld = bytes.fromhex(body.bericht_hex)
