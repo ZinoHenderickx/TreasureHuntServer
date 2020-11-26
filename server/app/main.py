@@ -268,7 +268,7 @@ opdracht7_json = {
             "{'bericht_versleuteld' : '...'}")
     },
     "bericht": "0f4fa34dfa1cf462af078fe7dac0a254d435814161",
-    "publieke_sleutel" : "8dd45fcbd457c543a07ba73220b411f928fd002d3f9f49c6f24e529f975e6821"
+    "publieke_sleutel" : "8dd45fcbd457c543a07ba73220b411f928fd002d3f9f49c6f24e529f975e6821",
     "nonce" : "379f91f62473975d"
 }
 
