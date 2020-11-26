@@ -248,9 +248,6 @@ msg = cipher.nonce + cipher.encrypt(plaintext)
 key_hex = b'\x8d\xd4_\xcb\xd4W\xc5C\xa0{\xa72 \xb4\x11\xf9(\xfd\x00-?\x9fI\xc6\xf2NR\x9f\x97^h!'.hex()
 msg_hex = b'\x80Q\x9dF\xd8\x007\x12\xae.\xd3\xaet\xb8Q\xd8\xfekG\xab\xa7'.hex()
 
-print(secret)
-print(plaintext)
-print(msg)
 print(key_hex)
 print(msg_hex)
 
@@ -271,10 +268,10 @@ opdracht7_json = {
         "beschrijving" : (
             "Encrypteer het bijgevoegde bericht met de bijgevoegde publieke sleutel"
             "De key en het bericht staan in hex waarde"
-            "{'bericht_versleuteld_hex' : '...'}")
+            "{'bericht_versleuteld' : '...'}")
     },
-    "bericht": "2e1230555edf217f9325406d5b4baab1d1378c94c2",
-    "publieke_sleutel_hex" : "2d2d2d2d2d424547494e205055424c4943204b45592d2d2d2d2d0a4d4947664d413047435371475349623344514542415155414134474e4144434269514b42675143306c3879446d6b5a68497248454c31785564395549454330780a7245394161584b46415763666a4d4b63716f4f7737656432534e344c6d4d4e54505176422f534b4f4f55394c4b6677374b45316b3952756e37735439565034500a6c764a526a33463755536f666d317379516b70737063504a753851636e616a51474173366c6b4830377a4d765445664b45366f514e7954346136694e6a4c4f6e0a3966534164466b794e6e55772f302b4671774944415141420a2d2d2d2d2d454e44205055424c4943204b45592d2d2d2d2d"
+    "bericht": "80519d46d8003712ae2ed3ae74b851d8fe6b47aba7",
+    "publieke_sleutel" : "8dd45fcbd457c543a07ba73220b411f928fd002d3f9f49c6f24e529f975e6821"
 }
 
 @app.post("/opdracht7")
