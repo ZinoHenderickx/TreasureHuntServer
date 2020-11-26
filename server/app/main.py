@@ -247,13 +247,9 @@ msg = cipher.nonce + cipher.encrypt(plaintext)
 
 key_hex = b'\x8d\xd4_\xcb\xd4W\xc5C\xa0{\xa72 \xb4\x11\xf9(\xfd\x00-?\x9fI\xc6\xf2NR\x9f\x97^h!'.hex()
 msg_hex = b'\x0fO\xa3M\xfa\x1c\xf4b\xaf\x07\x8f\xe7\xda\xc0\xa2T\xd45\x81Aa'.hex()
+nonce = b'7\x9f\x91\xf6$s\x97]'.hex()
 
-
-print(key_hex)
-print(msg_hex)
-
-
-
+print(nonce)
 
 
 # Publieke sleutel (in bytes) omvormen naar HEX om in JSON te zetten hieronder
@@ -266,12 +262,14 @@ opdracht7_json = {
     "opdracht" : {
         "id" : 7,
         "beschrijving" : (
-            "Decrypteer het bijgevoegde bericht met de bijgevoegde publieke sleutel"
-            "De key en het bericht staan in hex waarde"
+            "Decrypteer het bijgevoegde bericht met de bijgevoegde publieke sleutel."
+            "De key, nonce en het bericht staan in hex waarde."
+            "Vergeet niet de nonce mee te sturen, deze heb je nodig om je code te vervoledigen"
             "{'bericht_versleuteld' : '...'}")
     },
     "bericht": "0f4fa34dfa1cf462af078fe7dac0a254d435814161",
     "publieke_sleutel" : "8dd45fcbd457c543a07ba73220b411f928fd002d3f9f49c6f24e529f975e6821"
+    "nonce" : "379f91f62473975d"
 }
 
 @app.post("/opdracht7")
