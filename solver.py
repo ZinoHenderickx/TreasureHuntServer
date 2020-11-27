@@ -7,9 +7,10 @@ import hashlib
 
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
+from Crypto.Cipher import Salsa20
 
 ## URL zodat ik niet bij elke opdracht de url moet plaatsen.
-URL = "http://185.115.217.205:1234"
+URL = "http://192.168.0.20:8000"
 
 
 ## Opdracht 1
@@ -104,6 +105,24 @@ def opdracht6():
     result = x.text
     print(result)
 
+def opdracht7():
+
+    msg = bytes.fromhex("0f4fa34dfa1cf462af078fe7dac0a254d435814161")
+    secret = bytes.fromhex("8dd45fcbd457c543a07ba73220b411f928fd002d3f9f49c6f24e529f975e6821")
+    msg_nonce = bytes.fromhex("379f91f62473975d")
+
+
+    msg_nonce = msg[:8]
+    ciphertext = msg[8:]
+    cipher = Salsa20.new(key=secret, nonce=msg_nonce)
+    plaintext = cipher.decrypt(ciphertext)
+
+
+    x = requests.post(URL + "/opdracht8", json={"bericht_versleuteld": plaintext.decode('utf-8')})
+
+    result = x.text
+    print(result)
+
 
 ## main.py
 if __name__ == "__main__":
@@ -113,3 +132,4 @@ if __name__ == "__main__":
     opdracht4()
     opdracht5()
     opdracht6()
+    opdracht7()
